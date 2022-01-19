@@ -20,9 +20,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::prefix('v1')->namespace('App\Http\Controllers\Api')->group(function (){
+
     Route::post('/login', 'Auth\\LoginJWTController@login')->name('login');
     Route::get('/logout', 'Auth\\LoginJWTController@logout')->name('logout');
     Route::get('/refresh', 'Auth\\LoginJWTController@refresh')->name('refresh');
+
+    Route::get('/search', 'RealStateSearchController@index')->name('search');
+
+    Route::get('/search/{real_state_id}', 'RealStateSearchController@show')->name('search_single');
 
     Route::group(['middleware'=> ['jwt.auth']], function (){
         Route:: name('real_states.')->group(function(){
